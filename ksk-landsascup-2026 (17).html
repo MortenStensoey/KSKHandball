@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#003283">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>KSK G2014/2015 · Landsås Cup 2026</title>
+<style>
+/* ── RESET & TOKENS ─────────────────────────────────────────── */
+:root{
+  --blue:#003283;--blue-light:#81A9E1;--blue-soft:#e8f0fb;
+  --blue-deep:#001f52;--ink:#0f1b30;--grey:#5a6b86;
+  --line:#dfe6f1;--bg:#f4f7fc;--gold:#d9a441;
+  --shadow:0 6px 24px rgba(0,50,131,.10);--radius:16px;
+  --tap:48px; /* minimum touch target */
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  color:var(--ink);background:var(--bg);line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;min-height:-webkit-fill-available;
+  display:-webkit-box;display:flex;-webkit-box-orient:vertical;flex-direction:column;
+}
+h1,h2,h3{font-weight:800;letter-spacing:-.02em;line-height:1.15;}
+a{color:var(--blue);}
+img{max-width:100%;height:auto;}
+
+/* ── HEADER ─────────────────────────────────────────────────── */
+header{
+  background:
+    radial-gradient(ellipse 120% 60% at 80% -20%,rgba(129,169,225,.35),transparent),
+    linear-gradient(135deg,var(--blue),var(--blue-deep));
+  color:#fff;
+  padding: 28px 20px 36px;
+  padding-top: calc(28px + env(safe-area-inset-top));
+  position:relative;overflow:hidden;
+}
+header::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.04) 0 2px,transparent 2px 24px);
+}
+.header-inner{max-width:1080px;margin:0 auto;position:relative;z-index:1;}
+.kicker{text-transform:uppercase;letter-spacing:2.5px;font-size:11px;color:var(--blue-light);font-weight:700;margin-bottom:6px;}
+.header-inner h1{font-size:clamp(22px,6vw,48px);margin-bottom:6px;}
+.header-inner .sub{font-size:14px;color:#dbe6f7;font-weight:500;line-height:1.5;}
+.meta-row{display:-webkit-box;display:flex;-webkit-box-orient:horizontal;flex-direction:row;flex-wrap:wrap;gap:8px;margin-top:16px;}
+.chip{
+  background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);
+  padding:6px 13px;border-radius:999px;font-size:12px;font-weight:600;
+  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+  white-space:nowrap;
+}
+
+/* ── NAV ─────────────────────────────────────────────────────── */
+nav{
+  position:-webkit-sticky;position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,.96);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  border-bottom:2px solid var(--line);
+}
+.nav-inner{
+  max-width:1080px;margin:0 auto;
+  display:-webkit-box;display:flex;
+  gap:2px;padding:6px 12px;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;
+  scrollbar-width:none;-ms-overflow-style:none;
+}
+.nav-inner::-webkit-scrollbar{display:none;}
+nav a{
+  white-space:nowrap;text-decoration:none;color:var(--grey);
+  font-weight:700;font-size:13px;
+  padding:10px 13px;
+  min-height:var(--tap);
+  border-radius:10px;
+  -webkit-transition:background .2s,color .2s;transition:background .2s,color .2s;
+  display:-webkit-box;display:flex;-webkit-box-align:center;align-items:center;gap:6px;
+  -webkit-box-flex:0;flex:none;
+}
+nav a .nav-ic{font-size:15px;line-height:1;}
+nav a:hover{background:var(--blue-soft);color:var(--blue);}
+nav a.active{background:var(--blue);color:#fff;box-shadow:0 3px 10px rgba(0,50,131,.25);}
+
+/* ── MAIN ────────────────────────────────────────────────────── */
+main{max-width:1080px;margin:0 auto;padding:24px 16px 80px;-webkit-box-flex:1;flex:1;width:100%;}
+.page{display:none;-webkit-animation:fadein .25s ease;animation:fadein .25s ease;}
+.page.active{display:block;}
+@-webkit-keyframes fadein{from{opacity:0;-webkit-transform:translateY(8px);transform:translateY(8px);}to{opacity:1;-webkit-transform:none;transform:none;}}
+@keyframes fadein{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+.sec-head{margin-bottom:22px;}
+.sec-head h2{font-size:clamp(20px,5vw,32px);color:var(--blue);margin-bottom:4px;}
+.sec-head p{color:var(--grey);font-size:14px;}
+.divider{height:3px;width:42px;background:var(--blue-light);border-radius:2px;margin:8px 0 0;}
+
+/* ── HOME ────────────────────────────────────────────────────── */
+.home-hero{
+  background:linear-gradient(135deg,var(--blue),var(--blue-deep));
+  border-radius:var(--radius);padding:28px 22px;color:#fff;margin-bottom:20px;
+  position:relative;overflow:hidden;
+}
+.home-hero::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.04) 0 2px,transparent 2px 24px);}
+.home-hero h2{font-size:clamp(18px,5vw,28px);margin-bottom:6px;position:relative;}
+.home-hero p{color:#dbe6f7;font-size:14px;position:relative;line-height:1.5;}
+.nav-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:12px;}
+.nc{
+  background:#fff;border:2px solid var(--line);border-radius:var(--radius);
+  padding:18px;cursor:pointer;
+  -webkit-transition:border-color .2s,-webkit-transform .15s,box-shadow .2s;
+  transition:border-color .2s,transform .15s,box-shadow .2s;
+  text-align:left;min-height:var(--tap);
+  -webkit-tap-highlight-color:transparent;
+}
+.nc:active{-webkit-transform:scale(.97);transform:scale(.97);}
+@media(hover:hover){.nc:hover{border-color:var(--blue-light);-webkit-transform:translateY(-2px);transform:translateY(-2px);box-shadow:var(--shadow);}}
+.nc .ic{font-size:26px;display:block;margin-bottom:8px;}
+.nc strong{display:block;font-size:15px;color:var(--blue);font-weight:800;margin-bottom:3px;}
+.nc span{font-size:13px;color:var(--grey);}
+
+/* ── MATCH CARDS ─────────────────────────────────────────────── */
+.matches{display:grid;gap:12px;margin-bottom:24px;}
+.match{
+  background:#fff;border-radius:var(--radius);border:1px solid var(--line);
+  box-shadow:var(--shadow);overflow:hidden;
+  display:-webkit-box;display:flex;
+}
+.match .when{
+  background:linear-gradient(160deg,var(--blue),var(--blue-deep));
+  color:#fff;padding:14px 10px;text-align:center;
+  display:-webkit-box;display:flex;-webkit-box-orient:vertical;flex-direction:column;
+  -webkit-box-pack:center;justify-content:center;gap:3px;
+  -webkit-box-flex:0;flex:0 0 82px;min-width:82px;
+}
+.match .when .day{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--blue-light);font-weight:700;}
+.match .when .time{font-size:21px;font-weight:900;line-height:1.1;}
+.match .body{padding:13px 14px;-webkit-box-flex:1;flex:1;display:-webkit-box;display:flex;-webkit-box-orient:vertical;flex-direction:column;gap:6px;justify-content:center;}
+.lag-tag{display:inline-block;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;padding:2px 9px;border-radius:999px;}
+.lag1-tag{background:var(--blue-soft);color:var(--blue);}
+.lag2-tag{background:#eef6ee;color:#2a6e2a;}
+.match-lag2 .when.lag2-when{background:linear-gradient(160deg,#2a6e2a,#1a4a1a);}
+.match-lag2{border-color:#c5dfc5;}
+.teams{display:-webkit-box;display:flex;-webkit-box-align:center;align-items:center;gap:8px;flex-wrap:wrap;font-weight:700;font-size:15px;line-height:1.3;}
+.teams .vs{color:var(--blue-light);font-weight:800;font-size:11px;padding:2px 7px;background:var(--blue-soft);border-radius:5px;-webkit-box-flex:0;flex:none;}
+.teams .ksk{color:var(--blue);}
+.venue{font-size:12px;color:var(--grey);display:-webkit-box;display:flex;gap:10px;flex-wrap:wrap;-webkit-box-align:center;align-items:center;}
+.venue span{display:-webkit-box;display:flex;-webkit-box-align:center;align-items:center;gap:4px;}
+.vdot{width:6px;height:6px;border-radius:50%;background:var(--blue-light);display:inline-block;-webkit-box-flex:0;flex:none;}
+.mno{font-size:11px;color:#9aa8c0;font-weight:700;}
+
+/* day-group heading */
+.day-block{margin-bottom:28px;}
+.day-title{display:-webkit-box;display:flex;-webkit-box-align:center;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
+.day-title h3{font-size:16px;color:var(--blue);}
+.day-title .badge{background:var(--blue-soft);color:var(--blue);font-size:10px;padding:3px 11px;border-radius:999px;text-transform:uppercase;letter-spacing:1px;font-weight:700;white-space:nowrap;}
+
+/* lag legend */
+.lag-legend{display:-webkit-box;display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;}
+.lag-legend span{display:-webkit-box;display:flex;-webkit-box-align:center;align-items:center;gap:7px;background:#fff;padding:6px 14px;border-radius:999px;font-weight:800;font-size:12px;}
+
+/* ── TIMELINE ────────────────────────────────────────────────── */
+.timeline{position:relative;padding-left:32px;}
+.timeline::before{content:"";position:absolute;left:10px;top:8px;bottom:8px;width:2px;background:linear-gradient(var(--blue-light),var(--blue-soft));}
+.tl-item{position:relative;margin-bottom:10px;}
+.tl-item::before{content:"";position:absolute;left:-25px;top:10px;width:13px;height:13px;border-radius:50%;background:#fff;border:3px solid var(--blue-light);}
+.tl-item.match-dot::before{background:var(--blue);border-color:var(--blue);}
+.tl-item.hi::before{background:var(--gold);border-color:var(--gold);}
+.tl-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 14px;display:-webkit-box;display:flex;gap:12px;-webkit-box-align:baseline;align-items:baseline;}
+.tl-card.match-card{border-left:4px solid var(--blue);}
+.tl-card.hi-card{border-left:4px solid var(--gold);background:#fffcf0;}
+.tl-card .t{font-weight:800;color:var(--blue);min-width:52px;font-size:14px;-webkit-box-flex:0;flex:none;}
+.tl-card.hi-card .t{color:var(--gold);}
+.tl-card .txt{-webkit-box-flex:1;flex:1;min-width:0;}
+.tl-card .txt strong{display:block;font-size:14px;}
+.tl-card .txt small{color:var(--grey);font-size:12px;}
+
+/* ── ACTIVITY MINI ───────────────────────────────────────────── */
+.act-mini{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px;}
+.act-m{background:#fff;border:1px solid #f0e4c0;border-radius:11px;padding:12px 10px;text-align:center;}
+.act-m span{font-size:24px;display:block;margin-bottom:4px;}
+.act-m b{display:block;font-size:13px;color:var(--ink);margin-bottom:2px;}
+.act-m small{font-size:11px;color:var(--grey);}
+
+/* ── INFO CARDS ──────────────────────────────────────────────── */
+.grid2{display:grid;grid-template-columns:1fr;gap:14px;}
+@media(min-width:600px){.grid2{grid-template-columns:repeat(2,1fr);}}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);}
+.card h3{font-size:17px;color:var(--blue);margin-bottom:12px;display:-webkit-box;display:flex;-webkit-box-align:center;align-items:center;gap:8px;}
+.card ul{list-style:none;}
+.card li{padding:8px 0 8px 24px;position:relative;font-size:14px;border-bottom:1px dashed var(--line);line-height:1.5;}
+.card li:last-child{border-bottom:none;}
+.card li::before{content:"";position:absolute;left:4px;top:17px;width:7px;height:7px;border-radius:50%;background:var(--blue-light);}
+.card p{font-size:14px;color:var(--grey);margin-bottom:8px;line-height:1.5;}
+.card p:last-child{margin-bottom:0;}
+.highlight{background:var(--blue-soft);border-radius:10px;padding:12px 14px;font-size:13px;margin-top:12px;color:var(--blue-deep);line-height:1.5;}
+.highlight b{color:var(--blue);}
+
+/* ── PACK LIST ───────────────────────────────────────────────── */
+.pack li{cursor:pointer;-webkit-user-select:none;user-select:none;-webkit-transition:opacity .15s;transition:opacity .15s;min-height:var(--tap);}
+.pack li::before{content:"";width:18px;height:18px;border:2px solid var(--blue-light);border-radius:5px;background:#fff;top:14px;left:0;-webkit-transition:background .15s;transition:background .15s;}
+.pack li.done{color:#9aa8c0;text-decoration:line-through;}
+.pack li.done::before{background:var(--blue);border-color:var(--blue);}
+.pack li.done::after{content:"✓";position:absolute;left:3px;top:9px;color:#fff;font-size:12px;font-weight:900;}
+
+/* ── LEADERS ─────────────────────────────────────────────────── */
+.leaders{display:grid;grid-template-columns:1fr;gap:12px;}
+@media(min-width:480px){.leaders{grid-template-columns:repeat(2,1fr);}}
+@media(min-width:900px){.leaders{grid-template-columns:repeat(4,1fr);}}
+.leader{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;display:-webkit-box;display:flex;gap:12px;-webkit-box-align:center;align-items:center;}
+.leader.primary{background:linear-gradient(135deg,var(--blue),var(--blue-deep));color:#fff;border:none;box-shadow:var(--shadow);}
+.leader .av{-webkit-box-flex:0;flex:none;width:46px;height:46px;border-radius:50%;display:-webkit-box;display:flex;-webkit-box-align:center;align-items:center;-webkit-box-pack:center;justify-content:center;background:var(--blue-soft);color:var(--blue);font-weight:800;font-size:17px;}
+.leader.primary .av{background:rgba(255,255,255,.18);color:#fff;}
+.leader .info{display:-webkit-box;display:flex;-webkit-box-orient:vertical;flex-direction:column;gap:2px;min-width:0;}
+.leader .info b{font-size:15px;}
+.leader .info small{font-size:12px;opacity:.8;}
+.leader .info a{color:inherit;text-decoration:none;font-weight:700;}
+.role{color:var(--blue);font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:700;}
+.leader.primary .role{color:var(--blue-light);}
+
+/* ── FOOTER ──────────────────────────────────────────────────── */
+footer{
+  background:var(--blue-deep);color:#cdd9ee;
+  padding:28px 20px;
+  padding-bottom:calc(28px + env(safe-area-inset-bottom));
+  text-align:center;font-size:13px;
+}
+footer .crest-sm{font-weight:900;letter-spacing:1px;color:#fff;font-size:16px;margin-bottom:5px;}
+footer a{color:var(--blue-light);}
+
+/* ── MOBILE-FIRST BREAKPOINTS ────────────────────────────────── */
+@media(max-width:400px){
+  .match .when{-webkit-box-flex:0;flex:0 0 72px;min-width:72px;}
+  .match .when .time{font-size:18px;}
+  .teams{font-size:14px;}
+  nav a{font-size:12px;padding:10px 10px;}
+}
+@media(min-width:600px){
+  header{padding:36px 28px 48px;}
+  main{padding:32px 24px 80px;}
+  .match .when{-webkit-box-flex:0;flex:0 0 96px;min-width:96px;}
+  .match .when .time{font-size:23px;}
+  .act-mini{grid-template-columns:repeat(4,1fr);}
+  .timeline{padding-left:36px;}
+  .tl-item::before{left:-28px;}
+}
+@media(min-width:900px){
+  nav a{font-size:14px;padding:10px 16px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="kicker">Kvaløya Sportsklubb · Håndball</div>
+    <h1>G2014/2015 – Landsås Cup 2026</h1>
+    <p class="sub">Harstad · 5.–7. juni 2026 · Thon Hotel Arena · Nordsia skole</p>
+    <div class="meta-row">
+      <div class="chip">📅 5.–7. juni 2026</div>
+      <div class="chip">📍 Harstad</div>
+      <div class="chip">🥅 Klasse G11</div>
+      <a href="https://maps.google.com/?q=Nordsida+skole,+Harstad" target="_blank" rel="noopener" class="chip" style="text-decoration:none;color:#fff;">📍 Nordsida skole</a>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#hjem"      class="nav-link active"><span class="nav-ic">🏠</span>Hjem</a>
+    <a href="#kamper"    class="nav-link"><span class="nav-ic">🥅</span>Kamper</a>
+    <a href="#plan"      class="nav-link"><span class="nav-ic">📅</span>Helgeplan</a>
+    <a href="#transport" class="nav-link"><span class="nav-ic">🚗</span>Transport</a>
+    <a href="#mat"       class="nav-link"><span class="nav-ic">🍽️</span>Mat & overnatting</a>
+    <a href="#pakke"     class="nav-link"><span class="nav-ic">🎒</span>Pakkeliste</a>
+    <a href="#ledere"    class="nav-link"><span class="nav-ic">👤</span>Reiseleder & trenere</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- HJEM -->
+<div class="page active" id="page-hjem">
+  <div class="home-hero">
+    <h2>Velkommen til Landsås Cup! 🏆</h2>
+    <p>Nord-Norges største håndballturnering. KSK G2014/2015 stiller med to lag i Harstad 5.–7. juni. Trykk på en kategori under.</p>
+  </div>
+  <div class="nav-cards">
+    <div class="nc" onclick="navigate('kamper')"><span class="ic">🥅</span><strong>Kampprogram</strong><span>Lag 1 &amp; Lag 2 · 8 kamper</span></div>
+    <div class="nc" onclick="navigate('plan')"><span class="ic">📅</span><strong>Helgeplan</strong><span>Kamper, måltider og konsert</span></div>
+    <div class="nc" onclick="navigate('transport')"><span class="ic">🚗</span><strong>Transport</strong><span>Hurtigbåt eller bil til Harstad</span></div>
+    <div class="nc" onclick="navigate('mat')"><span class="ic">🍽️</span><strong>Mat &amp; overnatting</strong><span>Nordsia skole</span></div>
+    <div class="nc" onclick="navigate('pakke')"><span class="ic">🎒</span><strong>Pakkeliste</strong><span>Huk av etter hvert du pakker</span></div>
+    <div class="nc" onclick="navigate('ledere')"><span class="ic">👤</span><strong>Reiseleder &amp; trenere</strong><span>Hvem tar du kontakt med?</span></div>
+  </div>
+</div>
+
+<!-- KAMPPROGRAM -->
+<div class="page" id="page-kamper">
+  <div class="sec-head">
+    <h2>Kampprogram</h2>
+    <p>G11 · Alle kamper i Thon Hotel Arena · Sortert per dag</p>
+    <div class="divider"></div>
+  </div>
+  <div class="lag-legend">
+    <span style="border:2px solid var(--blue);color:var(--blue);">
+      <i style="width:9px;height:9px;border-radius:50%;background:var(--blue);display:inline-block;"></i>Lag 1
+    </span>
+    <span style="border:2px solid #2a7a2a;color:#2a7a2a;">
+      <i style="width:9px;height:9px;border-radius:50%;background:#2a7a2a;display:inline-block;"></i>Lag 2
+    </span>
+  </div>
+
+  <div class="day-block">
+    <div class="day-title"><span class="badge">Fredag 5. juni</span><h3>2 kamper</h3></div>
+    <div class="matches">
+      <div class="match match-lag2">
+        <div class="when lag2-when"><span class="day">Fre 5. jun</span><span class="time">17:20</span></div>
+        <div class="body">
+          <div class="lag-tag lag2-tag">Lag 2</div>
+          <div class="teams"><span class="ksk">KSK Lag 2</span><span class="vs">VS</span><span>Tverlandet IL 2014</span></div>
+          <div class="venue"><span><i class="vdot"></i>Thon Hotel Arena</span><span class="mno">#32</span><span class="mno">(oppmøte 17:00)</span></div>
+        </div>
+      </div>
+      <div class="match">
+        <div class="when"><span class="day">Fre 5. jun</span><span class="time">18:20</span></div>
+        <div class="body">
+          <div class="lag-tag lag1-tag">Lag 1</div>
+          <div class="teams"><span class="ksk">KSK Lag 1</span><span class="vs">VS</span><span>NOR HK 2014-1</span></div>
+          <div class="venue"><span><i class="vdot"></i>Thon Hotel Arena</span><span class="mno">#53</span><span class="mno">(oppmøte 18:00)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day-block">
+    <div class="day-title"><span class="badge">Lørdag 6. juni</span><h3>4 kamper</h3></div>
+    <div class="matches">
+      <div class="match match-lag2">
+        <div class="when lag2-when"><span class="day">Lør 6. jun</span><span class="time">08:00</span></div>
+        <div class="body">
+          <div class="lag-tag lag2-tag">Lag 2</div>
+          <div class="teams"><span class="ksk">KSK Lag 2</span><span class="vs">VS</span><span>NOR HK 2014-1</span></div>
+          <div class="venue"><span><i class="vdot"></i>Thon Hotel Arena</span><span class="mno">#133</span><span class="mno">(oppmøte 07:40)</span></div>
+        </div>
+      </div>
+      <div class="match">
+        <div class="when"><span class="day">Lør 6. jun</span><span class="time">08:20</span></div>
+        <div class="body">
+          <div class="lag-tag lag1-tag">Lag 1</div>
+          <div class="teams"><span>Lia-Brage HK G11</span><span class="vs">VS</span><span class="ksk">KSK Lag 1</span></div>
+          <div class="venue"><span><i class="vdot"></i>Thon Hotel Arena</span><span class="mno">#140</span><span class="mno">(oppmøte 08:00)</span></div>
+        </div>
+      </div>
+      <div class="match">
+        <div class="when"><span class="day">Lør 6. jun</span><span class="time">10:40</span></div>
+        <div class="body">
+          <div class="lag-tag lag1-tag">Lag 1</div>
+          <div class="teams"><span>Tverlandet IL 2014</span><span class="vs">VS</span><span class="ksk">KSK Lag 1</span></div>
+          <div class="venue"><span><i class="vdot"></i>Thon Hotel Arena</span><span class="mno">#211</span><span class="mno">(oppmøte 10:20)</span></div>
+        </div>
+      </div>
+      <div class="match match-lag2">
+        <div class="when lag2-when"><span class="day">Lør 6. jun</span><span class="time">11:40</span></div>
+        <div class="body">
+          <div class="lag-tag lag2-tag">Lag 2</div>
+          <div class="teams"><span class="ksk">KSK Lag 2</span><span class="vs">VS</span><span>Tromsø HK</span></div>
+          <div class="venue"><span><i class="vdot"></i>Thon Hotel Arena</span><span class="mno">#243</span><span class="mno">(oppmøte 11:20)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day-block">
+    <div class="day-title"><span class="badge">Søndag 7. juni</span><h3>2 kamper</h3></div>
+    <div class="matches">
+      <div class="match">
+        <div class="when"><span class="day">Søn 7. jun</span><span class="time">10:00</span></div>
+        <div class="body">
+          <div class="lag-tag lag1-tag">Lag 1</div>
+          <div class="teams"><span>NOR HK 2014-2</span><span class="vs">VS</span><span class="ksk">KSK Lag 1</span></div>
+          <div class="venue"><span><i class="vdot"></i>Thon Hotel Arena</span><span class="mno">#380</span><span class="mno">(oppmøte 09:40)</span></div>
+        </div>
+      </div>
+      <div class="match match-lag2">
+        <div class="when lag2-when"><span class="day">Søn 7. jun</span><span class="time">11:00</span></div>
+        <div class="body">
+          <div class="lag-tag lag2-tag">Lag 2</div>
+          <div class="teams"><span>Kiruna HK</span><span class="vs">VS</span><span class="ksk">KSK Lag 2</span></div>
+          <div class="venue"><span><i class="vdot"></i>Thon Hotel Arena</span><span class="mno">#399</span><span class="mno">(oppmøte 10:40)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    📎 Profixio:
+    <a href="https://www.profixio.com/app/fagmobler-landsas-cup-2025-2026/teams/1553349" target="_blank" rel="noopener">Lag 1</a> ·
+    <a href="https://www.profixio.com/app/fagmobler-landsas-cup-2025-2026/teams/1576316" target="_blank" rel="noopener">Lag 2</a>
+  </div>
+</div>
+
+<!-- HELGEPLAN -->
+<div class="page" id="page-plan">
+  <div class="sec-head">
+    <h2>Helgeplan</h2>
+    <p>Måltider tilpasset kamptidene. Begge lag følger felles rytme.</p>
+    <div class="divider"></div>
+  </div>
+
+  <div class="day-block">
+    <div class="day-title"><span class="badge">Fredag 5. juni</span><h3>Ankomst &amp; kamper</h3></div>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-card"><span class="t">~16:45</span><div class="txt"><strong>Ankomst Harstad</strong><small>Rigg til på Nordsida skole, finn sengeplass.</small></div></div></div>
+      <div class="tl-item match-dot"><div class="tl-card match-card"><span class="t">17:20</span><div class="txt"><strong>⚽ Kamp: Lag 2 vs Tverlandet IL 2014</strong><small>Thon Hotel Arena · kamp #32 (oppmøte 17:00)</small></div></div></div>
+      <div class="tl-item match-dot"><div class="tl-card match-card"><span class="t">18:20</span><div class="txt"><strong>⚽ Kamp: Lag 1 vs NOR HK 2014-1</strong><small>Thon Hotel Arena · kamp #53 (oppmøte 18:00)</small></div></div></div>
+      <div class="tl-item"><div class="tl-card"><span class="t">20:00</span><div class="txt"><strong>🥪 Kvelds (kjøpt inn av laget)</strong><small>Etter siste kamp. Snacks ordner hver enkelt selv.</small></div></div></div>
+      <div class="tl-item"><div class="tl-card"><span class="t">~22:00</span><div class="txt"><strong>😴 Ro på rommene</strong><small>Tidlig start lørdag – Lag 2 spiller 08:00.</small></div></div></div>
+    </div>
+  </div>
+
+  <div class="day-block">
+    <div class="day-title"><span class="badge">Lørdag 6. juni</span><h3>Kamper + aktiviteter + konsert</h3></div>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-card"><span class="t">07:00</span><div class="txt"><strong>🍳 Frokost (kjøpt inn av laget)</strong><small>Tidlig – Lag 2 spiller 08:00, Lag 1 kl 08:20.</small></div></div></div>
+      <div class="tl-item match-dot"><div class="tl-card match-card"><span class="t">08:00</span><div class="txt"><strong>⚽ Kamp: Lag 2 vs NOR HK 2014-1</strong><small>Thon Hotel Arena · kamp #133 (oppmøte 07:40)</small></div></div></div>
+      <div class="tl-item match-dot"><div class="tl-card match-card"><span class="t">08:20</span><div class="txt"><strong>⚽ Kamp: Lia-Brage HK G11 vs Lag 1</strong><small>Thon Hotel Arena · kamp #140 (oppmøte 08:00)</small></div></div></div>
+      <div class="tl-item match-dot"><div class="tl-card match-card"><span class="t">10:40</span><div class="txt"><strong>⚽ Kamp: Tverlandet IL 2014 vs Lag 1</strong><small>Thon Hotel Arena · kamp #211 (oppmøte 10:20)</small></div></div></div>
+      <div class="tl-item match-dot"><div class="tl-card match-card"><span class="t">11:40</span><div class="txt"><strong>⚽ Kamp: Lag 2 vs Tromsø HK</strong><small>Thon Hotel Arena · kamp #243 (oppmøte 11:20) · siste kamp lørdag</small></div></div></div>
+      <div class="tl-item hi"><div class="tl-card hi-card"><span class="t">13–17</span><div class="txt">
+        <strong>🎯 Fri aktivitet – velg én for laget!</strong>
+        <small>Hold margin så alle rekker middag og konsert kl 18.</small>
+        <div class="act-mini">
+          <div class="act-m"><span>🥏</span><b>Frisbeegolf</b><small>Gratis, enkelt</small></div>
+          <div class="act-m"><span>🚵</span><b>Bikepark</b><small>Fart &amp; spenning</small></div>
+          <div class="act-m"><span>🏊</span><b>Grottebadet</b><small>Husk badetøy!</small></div>
+          <div class="act-m"><span>🌊</span><b>Bading i havet</b><small>For de modige</small></div>
+        </div>
+      </div></div></div>
+      <div class="tl-item"><div class="tl-card"><span class="t">16:30</span><div class="txt"><strong>🍝 Felles middag</strong><small>Samles før konserten.</small></div></div></div>
+      <div class="tl-item hi"><div class="tl-card hi-card"><span class="t">18:00</span><div class="txt"><strong>🎶 Konsert</strong><small>Cupens konsert. Møt opp samlet!</small></div></div></div>
+      <div class="tl-item"><div class="tl-card"><span class="t">21:30</span><div class="txt"><strong>🥪 Kvelds (kjøpt inn av laget)</strong><small>Rolig kveld på skolen.</small></div></div></div>
+    </div>
+  </div>
+
+  <div class="day-block">
+    <div class="day-title"><span class="badge">Søndag 7. juni</span><h3>Kamper, rydding &amp; hjemreise</h3></div>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-card"><span class="t">09:00</span><div class="txt"><strong>🍳 Frokost (kjøpt inn av laget)</strong><small>Pakk sakene før kampene.</small></div></div></div>
+      <div class="tl-item"><div class="tl-card"><span class="t">~08:30</span><div class="txt"><strong>🧹 Rydding/vask</strong><small>Rommet skal forlates ryddig og feiet – sjekk tidsfrist med arrangør.</small></div></div></div>
+      <div class="tl-item match-dot"><div class="tl-card match-card"><span class="t">10:00</span><div class="txt"><strong>⚽ Kamp: NOR HK 2014-2 vs Lag 1</strong><small>Thon Hotel Arena · kamp #380 (oppmøte 09:40)</small></div></div></div>
+      <div class="tl-item match-dot"><div class="tl-card match-card"><span class="t">11:00</span><div class="txt"><strong>⚽ Kamp: Kiruna HK vs Lag 2</strong><small>Thon Hotel Arena · kamp #399 (oppmøte 10:40) · siste kamp i cupen</small></div></div></div>
+      <div class="tl-item"><div class="tl-card"><span class="t">~12:00</span><div class="txt"><strong>✅ Siste sjekk &amp; hjemreise</strong><small>Klasserom kontrollert, alt med? God tur hjem!</small></div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TRANSPORT -->
+<div class="page" id="page-transport">
+  <div class="sec-head">
+    <h2>Transport</h2>
+    <p>Hver enkelt sørger for reise til og fra Harstad.</p>
+    <div class="divider"></div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>🚗 Slik kommer du dit</h3>
+      <ul>
+        <li><b>Hurtigbåt</b> eller <b>bil</b> er anbefalt</li>
+        <li>Bil gir mest fleksibilitet for aktiviteter underveis</li>
+        <li>Samkjøring? Avtal gjerne innad i laget</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>⏰ Ankomst</h3>
+      <p>Anbefalt ankomst <b>ca. kl 16:45 fredag</b>, slik at man rekker å rigge på Nordsia skole før kampstart.</p>
+      <div class="highlight">Lag 2 spiller allerede <b>17:20</b> og Lag 1 kl <b>18:20</b> – beregn god margin!</div>
+    </div>
+    <div class="card">
+      <h3>🚌 Rutebuss i Harstad</h3>
+      <ul>
+        <li>Rutebuss er et godt alternativ for å komme seg rundt i Harstad</li>
+        <li>Bestill billetter via <a href="https://www.svipper.no" target="_blank" rel="noopener"><b>Svipper</b></a></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🏟️ Transport under turneringen</h3>
+      <ul>
+        <li>Turneringen tilbyr <b>gratis transport</b> mellom skoler og arenaer i hele cup-helgen</li>
+        <li>Se bussruter og avgangstider på <a href="https://landsascup.no/bussruter/" target="_blank" rel="noopener"><b>landsascup.no/bussruter</b></a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- MAT & OVERNATTING -->
+<div class="page" id="page-mat">
+  <div class="sec-head">
+    <h2>Mat &amp; overnatting</h2>
+    <p>Vi bor og spiser felles på Nordsia skole i Harstad.</p>
+    <div class="divider"></div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>🏫 Overnatting</h3>
+      <ul>
+        <li>Overnatting på <a href="https://maps.google.com/?q=Nordsida+skole,+Harstad" target="_blank" rel="noopener" style="color:var(--blue);font-weight:700;">📍 Nordsida skole</a></li>
+        <li>Madrass/liggeunderlag <b>maks 90 cm bredde</b> per person</li>
+        <li>Rommet forlates ryddig og feiet – sjekk tidsfrist med arrangør</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🍽️ Mat</h3>
+      <ul>
+        <li>Kvelds kjøpes inn av laget (fredag og lørdag)</li>
+        <li>Frokost kjøpes inn av laget (lørdag og søndag)</li>
+        <li>Felles <b>middag lørdag</b> før konsert</li>
+        <li><b>Snacks</b> sørger den enkelte for selv</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- PAKKELISTE -->
+<div class="page" id="page-pakke">
+  <div class="sec-head">
+    <h2>Pakkeliste</h2>
+    <p>Trykk på et punkt for å huke det av.</p>
+    <div class="divider"></div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>🎽 Håndball &amp; klær</h3>
+      <ul class="pack">
+        <li>Spillerdrakt, shorts, innesko og evt. knebeskytter</li>
+        <li>Skifteklær (joggebukse, t-skjorte, bokser og sokker)</li>
+        <li>Badetøy (om vi rekker grottebadet)</li>
+        <li>Håndduk</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🛏️ Overnatting &amp; diverse</h3>
+      <ul class="pack">
+        <li>Madrass/liggeunderlag (maks 90 cm bredde)</li>
+        <li>Sovepose/dyne</li>
+        <li>Toalettsaker</li>
+        <li>Lader til mobil</li>
+        <li>Brett-/kortspill (om noen ønsker)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- REISELEDERE -->
+<div class="page" id="page-ledere">
+  <div class="sec-head">
+    <h2>Reiseleder & trenere</h2>
+    <p>Ta kontakt om du lurer på noe under oppholdet.</p>
+    <div class="divider"></div>
+  </div>
+  <div class="leaders">
+    <div class="leader primary">
+      <div class="av">MS</div>
+      <div class="info">
+        <span class="role">Hovedreiseleder</span>
+        <b>Morten Stensøy</b>
+        <small><a href="tel:91355569">📞 913 55 569</a></small>
+        <small style="opacity:.65;font-size:11px;">Koordinerer oppholdet og klubbens plikter</small>
+      </div>
+    </div>
+    <div class="leader">
+      <div class="av">SH</div>
+      <div class="info"><span class="role">Trener</span><b>Stine Holand</b><small><a href="tel:90134190">📞 901 34 190</a></small></div>
+    </div>
+    <div class="leader">
+      <div class="av">KS</div>
+      <div class="info"><span class="role">Trener</span><b>Kim-Atle Slettbakk</b><small><a href="tel:41047517">📞 410 47 517</a></small></div>
+    </div>
+    <div class="leader">
+      <div class="av">KK</div>
+      <div class="info"><span class="role">Trener</span><b>Kristoffer Knutsen</b><small><a href="tel:47832659">📞 478 32 659</a></small></div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <div class="crest-sm">KSK · KVALØYA SPORTSKLUBB</div>
+  <p>G2014/2015 · Fagmøbler Landsås Cup 2026 · Harstad 5.–7. juni</p>
+  <p style="margin-top:7px;">
+    <a href="https://www.profixio.com/app/fagmobler-landsas-cup-2025-2026" target="_blank" rel="noopener">Profixio</a> ·
+    <a href="https://landsascup.no" target="_blank" rel="noopener">landsascup.no</a>
+  </p>
+  <p style="margin-top:8px;font-size:11px;opacity:.55;">Tidspunkt for måltider og aktiviteter er veiledende.</p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var pages = document.querySelectorAll('.page');
+  var links  = document.querySelectorAll('.nav-link');
+
+  function navigate(id) {
+    pages.forEach(function(p){ p.classList.remove('active'); });
+    links.forEach(function(l){ l.classList.remove('active'); });
+    var page = document.getElementById('page-' + id);
+    if (page) page.classList.add('active');
+    var link = document.querySelector('a[href="#' + id + '"]');
+    if (link) link.classList.add('active');
+    try { history.replaceState(null, '', '#' + id); } catch(e){}
+    window.scrollTo(0, 0);
+  }
+
+  // Expose for onclick= attributes
+  window.navigate = navigate;
+
+  links.forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      navigate(a.getAttribute('href').replace('#',''));
+    });
+  });
+
+  // Respect hash on load
+  var hash = location.hash.replace('#','');
+  if (hash && document.getElementById('page-' + hash)) {
+    navigate(hash);
+  }
+
+  // Pakkeliste – touch + click
+  document.querySelectorAll('.pack li').forEach(function(li){
+    li.addEventListener('click', function(){ li.classList.toggle('done'); });
+  });
+
+  // Scroll aktiv nav-lenke inn i view på mobil
+  function scrollNavToActive() {
+    var active = document.querySelector('.nav-link.active');
+    if (active) {
+      active.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  }
+  links.forEach(function(a){
+    a.addEventListener('click', function(){ setTimeout(scrollNavToActive, 50); });
+  });
+})();
+</script>
+</body>
+</html>
